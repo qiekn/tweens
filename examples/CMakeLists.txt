@@ -6,3 +6,6 @@ target_link_libraries(curve_viewer PRIVATE ck::tween)
 
 add_executable(smooth_demo smooth_demo.cpp)
 target_link_libraries(smooth_demo PRIVATE ck::tween)
+
+add_executable(motion_demo motion_demo.cpp)
+target_link_libraries(motion_demo PRIVATE ck::tween)
