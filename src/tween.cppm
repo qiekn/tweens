@@ -7,3 +7,4 @@
 export module ck.tween;
 
 export import :ease;
+export import :lerp;
