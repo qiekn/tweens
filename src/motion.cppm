@@ -1,18 +1,6 @@
-module;
-
-#include <algorithm>
-#include <cstddef>
-#include <functional>
-#include <memory>
-#include <string>
-#include <string_view>
-#include <utility>
-#include <vector>
-
-#include <raylib.h>
-
 export module ck.tween:motion;
 
+import std;
 import :ease;
 import :lerp;
 

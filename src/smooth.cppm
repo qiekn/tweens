@@ -1,9 +1,6 @@
-module;
-
-#include <cmath>
-
 export module ck.tween:smooth;
 
+import std;
 import :lerp;
 
 namespace ck::tween {

@@ -1,9 +1,6 @@
-module;
-
-#include <cmath>
-#include <numbers>
-
 export module ck.tween:ease;
+
+import std;
 
 // =============================================================================
 // Easing functions for tweening.

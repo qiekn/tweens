@@ -1,21 +1,21 @@
-module;
-
-#include <algorithm>
-#include <cmath>
-#include <concepts>
-
-#include <raylib.h>
-
 export module ck.tween:lerp;
 
+import std;
+import raylib;
+
 // =============================================================================
-// Linear interpolation overloads — the basic building block under every
-// `Smooth<T>` and `Tween<T>` in this library. Add new overloads here when the
-// game grows a new tweenable type.
+// Linear interpolation overloads — the building block under every `Smooth<T>`
+// and `Tween<T>` in this library. Add new overloads here when the game grows
+// a new tweenable type.
 //
 // Convention: `lerp(a, b, t)` with t in [0, 1] returns a value between `a`
 // (at t=0) and `b` (at t=1). Overshoot (t outside [0, 1]) is allowed for
 // numeric types — Color clamps because uint8 can't represent overshoot.
+//
+// Color note: we overload on `ck::Color` (raylib-hpp's wrapper), not raw
+// `::Color`. raylib-hpp's `import raylib;` only names `ck::Color`. Users with
+// raw `::Color` variables still work because `ck::Color : public ::Color`:
+// implicit derived-to-base slicing on call, implicit constructor on assign.
 // =============================================================================
 
 namespace ck::tween {
@@ -48,23 +48,24 @@ export inline ::Rectangle lerp(::Rectangle a, ::Rectangle b, float t) noexcept {
 }
 
 // -----------------------------------------------------------------------------: color
-// uint8 components: lerp in float space, round, clamp to [0, 255].
-// Clamp matters when t is outside [0, 1] (e.g. ease::*_back overshoot would
-// otherwise wrap around).
-export inline ::Color lerp(::Color a, ::Color b, float t) noexcept {
+// uint8 components: lerp in float space, round, clamp to [0, 255]. Clamp
+// matters when t leaves [0, 1] (e.g. ease::*_back overshoot would otherwise
+// wrap around).
+export inline ck::Color lerp(ck::Color a, ck::Color b, float t) noexcept {
   const auto byte = [](unsigned char ca, unsigned char cb,
                        float tt) -> unsigned char {
     const float v =
         std::lerp(static_cast<float>(ca), static_cast<float>(cb), tt);
     return static_cast<unsigned char>(std::round(std::clamp(v, 0.0f, 255.0f)));
   };
-  return {byte(a.r, b.r, t), byte(a.g, b.g, t), byte(a.b, b.b, t),
-          byte(a.a, b.a, t)};
+  return ck::Color{byte(a.r, b.r, t), byte(a.g, b.g, t), byte(a.b, b.b, t),
+                   byte(a.a, b.a, t)};
 }
 
 // -----------------------------------------------------------------------------: concept
-// True iff `lerp(a, b, t)` is callable for T. Uses ADL so user-defined types
-// with their own `lerp` overload (in their namespace) satisfy it too.
+// True iff `lerp(a, b, t)` is callable for T. Uses unqualified lookup so
+// user-defined types whose `lerp` overload sits in their namespace satisfy it
+// via ADL.
 export template <typename T>
 concept Lerpable = requires(T a, T b, float t) {
   { lerp(a, b, t) } -> std::convertible_to<T>;
