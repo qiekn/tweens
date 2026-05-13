@@ -27,10 +27,10 @@ int main() {
 
   Vector2 box_pos{200, 400};
   Vector2 box_scale{1.0f, 1.0f};
-  ck::Color box_color{120, 200, 255, 255};
+  ck::Color box_color = ck::SKYBLUE;
 
-  const ck::Color rest_color{120, 200, 255, 255};
-  const ck::Color flash_color{255, 180, 80, 255};
+  const ck::Color rest_color = ck::SKYBLUE;
+  const ck::Color flash_color = ck::ORANGE;
 
   const auto pulse_box = [&] {
     tw::seq()
@@ -68,7 +68,7 @@ int main() {
       Drawing draw;
       ClearBackground(ck::Color{25, 25, 30, 255});
 
-      DrawCircleV(chaser, 18.0f, ck::Color{120, 200, 255, 255});
+      DrawCircleV(chaser, 18.0f, ck::SKYBLUE);
       DrawText(
           std::format("chaser: ({:.0f}, {:.0f})", chaser.x, chaser.y).c_str(),
           12, 12, 14, GRAY);

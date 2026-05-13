@@ -70,8 +70,8 @@ int main() {
   const ck::Color kBg{25, 25, 30, 255};
   const ck::Color kCellFrame{50, 50, 60, 255};
   const ck::Color kAxisMain{70, 70, 80, 255};
-  const ck::Color kAxisDim{70, 70, 80, 100};
-  const ck::Color kCurve{120, 200, 255, 255};
+  const ck::Color kAxisDim = kAxisMain.Fade(0.4f);
+  const ck::Color kCurve = ck::SKYBLUE;
 
   float elapsed = 0.0f;
 
