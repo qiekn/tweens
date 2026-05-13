@@ -47,7 +47,8 @@ target_sources(ck_tween
     FILE_SET CXX_MODULES FILES
       src/tween.cppm
       src/ease.cppm
-      src/lerp.cppm)
+      src/lerp.cppm
+      src/smooth.cppm)
 target_compile_features(ck_tween PUBLIC cxx_std_23)
 # PUBLIC because lerp overloads expose raylib types in their signatures —
 # anyone who imports ck.tween needs raylib to compile.
